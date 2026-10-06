@@ -87,6 +87,21 @@ footer small{display:block;font:400 .95rem Figtree,sans-serif;margin-top:8px;col
 .spin2{transform-box:fill-box;transform-origin:center;animation:spin 6s linear infinite}
 .walk{animation:walk 14s linear infinite}
 @keyframes walk{from{transform:translateX(-80px)}to{transform:translateX(1000px)}}
+/* sign-up + contact */
+.signup{background:var(--sky)}
+.su-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 22px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px}
+.su-form .full{grid-column:1/-1}
+.su-form label{display:block;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.su-form input,.su-form select,.su-form textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.su-form textarea{min-height:110px;resize:vertical}
+.su-form button.btn{border:0;cursor:pointer;font:600 1.05rem Figtree,sans-serif}
+.su-note{margin:0;color:var(--mute);font-size:.95rem}
+.su-status{margin:0;font-weight:600;color:var(--leaf)}
+.contact{padding:56px 0}
+.contact .box{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--leaf);border-radius:0 18px 18px 0;padding:24px 26px}
+.contact h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--deep);margin-bottom:8px}
+.contact p{margin:0;color:var(--mute)}
+.contact a{color:var(--leaf);font-weight:600}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}.leaf{opacity:1}}
 </style>
 </head>
@@ -266,8 +281,48 @@ footer small{display:block;font:400 .95rem Figtree,sans-serif;margin-top:8px;col
     <article><h3>Local schools and youth</h3><p><b>Benefit:</b> Early environmental awareness and practical habits that support sustainable living for life.</p></article>
   </div>
 </div></section>
+
+<section class="signup" id="signup"><div class="wrap">
+  <div class="sec-head"><h2>Sign up to volunteer</h2><p>Tell us a little about yourself and how you'd like to help. We'll get back to you with the next event.</p></div>
+  <form class="su-form" id="suForm" novalidate>
+    <div><label for="suName">Full name</label><input id="suName" name="name" type="text" autocomplete="name" required></div>
+    <div><label for="suEmail">Email</label><input id="suEmail" name="email" type="email" autocomplete="email" required></div>
+    <div class="full"><label for="suRole">How would you like to help?</label>
+      <select id="suRole" name="role">
+        <option>Neighborhood clean-up drives</option>
+        <option>Urban tree planting and greening</option>
+        <option>Eco-education workshops</option>
+        <option>Data and digital mapping</option>
+        <option>Upcycling and repair hubs</option>
+      </select></div>
+    <div class="full"><label for="suMsg">Anything else? (optional)</label><textarea id="suMsg" name="message"></textarea></div>
+    <div class="full"><button class="btn" type="submit">Sign up</button></div>
+    <p class="su-note full">Submitting opens your email app with your sign-up ready to send.</p>
+    <p class="su-status full" id="suStatus" role="status" aria-live="polite"></p>
+  </form>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+  <div class="box">
+    <h2>Contact</h2>
+    <p>Questions? Email us at <a href="mailto:duy058194@stu.vinschool.edu.vn">duy058194@stu.vinschool.edu.vn</a></p>
+  </div>
+</div></section>
 </main>
 
 <footer>Start local, stay curious and bring a neighbor.<small>EcoAction is an extracurricular community project.</small></footer>
+<script>
+(function(){
+  var f=document.getElementById('suForm'),s=document.getElementById('suStatus');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=f.name.value.trim(),m=f.email.value.trim();
+    if(!n||!m||m.indexOf('@')<1){s.style.color='#d9453a';s.textContent='Please enter your name and a valid email.';return}
+    var body='Name: '+n+'\nEmail: '+m+'\nInterested in: '+f.role.value+'\n\n'+f.message.value.trim();
+    window.location.href='mailto:duy058194@stu.vinschool.edu.vn?subject='+encodeURIComponent('EcoAction volunteer sign-up')+'&body='+encodeURIComponent(body);
+    s.style.color='';s.textContent='Thanks, '+n+'! Your email app should open. Just press send.';
+  });
+})();
+</script>
 </body>
 </html>
